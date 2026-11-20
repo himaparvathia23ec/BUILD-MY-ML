@@ -1,34 +1,40 @@
-<p align="center">
-  <img src="docs/buildmyml_poster_v2.png" alt="BuildMyML overview" width="92%">
-</p>
-
 <h1 align="center">BuildMyML</h1>
 
 <p align="center">
-  <b>Turn a plain-language idea into a structured machine learning plan.</b><br>
-  Grounded in a curated ML knowledge base, with every recommendation tied to its source.
+  <b>Describe a machine learning idea in plain language. Get a complete 20-section architecture blueprint.</b><br>
+  Datasets, preprocessing, algorithms, validation, deployment, monitoring, and a roadmap, ready to download.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11+-1F1B16?style=flat-square&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/FastAPI-backend-1F1B16?style=flat-square&logo=fastapi&logoColor=white">
-  <img src="https://img.shields.io/badge/React-Vite-1F1B16?style=flat-square&logo=react&logoColor=white">
-  <img src="https://img.shields.io/badge/Supabase-pgvector-B5532F?style=flat-square&logo=supabase&logoColor=white">
-  <img src="https://img.shields.io/badge/Gemini-API-5C7A4B?style=flat-square">
+  <a href="https://build-my-ml.onrender.com"><img src="https://img.shields.io/badge/Live%20demo-build--my--ml.onrender.com-B5532F?style=for-the-badge"></a>
+  <img src="https://img.shields.io/badge/React%2019-Vite-1F1B16?style=for-the-badge&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-Express-1F1B16?style=for-the-badge&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Firebase-Auth%20%2B%20Firestore-5C7A4B?style=for-the-badge&logo=firebase&logoColor=white">
+  <img src="https://img.shields.io/badge/Gemini-optional-5C7A4B?style=for-the-badge">
 </p>
 
 ---
 
-## What it does
+## Why it exists
 
-You describe a problem in your own words, such as *"predict customer churn for a telecom company."* BuildMyML:
+Most AutoML tools start after the problem is already defined. BuildMyML works earlier, at the point where a beginner asks *"what should I even build?"* It turns a rough idea into a structured plan: what the target is, which metric fits, where leakage could creep in, and how the project should be validated and deployed.
 
-1. **Extracts the requirements**: the task, the target, and the constraints.
-2. **Retrieves guidance** from a curated knowledge base of machine learning practice, using semantic search.
-3. **Asks Gemini** to recommend a learning task, preprocessing steps, candidate models, and evaluation metrics, using only the retrieved passages as context.
-4. **Assembles a blueprint** you can read, check, and export.
+It does **not** train a model. It designs the project around one.
 
-The goal is to help beginners make the design decisions *before* any training code is written: is it classification or clustering, which metric fits an imbalanced dataset, and where data leakage could creep in.
+---
+
+## Try it
+
+**Live:** https://build-my-ml.onrender.com
+
+1. Type a prompt, or pick a quick or detailed example.
+2. Optionally attach a curated public dataset.
+3. Answer any clarifying questions, or skip them and use defaults.
+4. Read the 20-section blueprint, inspect the architecture diagram, and download the **PDF** or **ZIP**.
+
+Signed-in users can also save projects to their history.
+
+> **Free hosting note:** the Render free tier sleeps when idle. The first request after a pause can take longer.
 
 ---
 
@@ -36,80 +42,86 @@ The goal is to help beginners make the design decisions *before* any training co
 
 ```mermaid
 flowchart LR
-    A([Your idea]) --> B[Requirements]
-    B --> C[RAG retrieval]
-    C -->|top matching chunks| D[Gemini recommendation]
-    D --> E[Blueprint generation]
-    E -.-> F{{Critic check<br/>planned}}
-    E -.-> G[(Export<br/>JSON · Markdown · ZIP)]
-
-    KB[(Knowledge base<br/>238 chunks · 384-d)] -.-> C
-    classDef planned stroke-dasharray: 5 5,fill:#FFFCF5,stroke:#7A7064,color:#7A7064;
-    class F,G planned;
+    U([Your idea]) --> RA[Requirement analysis]
+    RA --> CL{Underspecified?}
+    CL -->|yes| Q[Clarification questions]
+    Q --> RAG
+    CL -->|no| RAG[RAG knowledge retrieval]
+    RAG --> BG[Blueprint generator]
+    BG --> CR[Critic agent]
+    CR --> OUT[(20-section blueprint<br/>PDF · ZIP)]
+    G[(Gemini API)] -.-> RA
+    G -.-> BG
+    FB[(Demo fallback)] -.->|if Gemini is unavailable| BG
 ```
 
-| Stage | What it does | Status |
-|---|---|---|
-| Requirements | Structures the idea into task, target, and constraints | Built, end-to-end run not yet verified |
-| RAG retrieval | Finds the knowledge-base passages closest in meaning to the idea | Built, end-to-end run not yet verified |
-| Gemini recommendation | Writes the recommendations, grounded in the retrieved passages | Built, end-to-end run not yet verified |
-| Blueprint generation | Assembles architecture, metrics, and roadmap | Built, end-to-end run not yet verified |
-| Critic check | Checks that the model, metric, and preprocessing agree | Planned |
-| Export | Downloads the blueprint as JSON, Markdown, or ZIP | In progress |
+| Stage | What happens |
+|---|---|
+| **Requirement agent** | Turns the prompt and dataset metadata into structured requirements: task, modality, objective, deployment, latency, scale, and constraints. |
+| **Clarification agent** | Runs only when the prompt is underspecified. Asks two to four multiple-choice questions. |
+| **RAG retrieval** | Ranks the local ML knowledge base by modality, tags, keywords, and dataset-specific boosters, and keeps the top five references. |
+| **Blueprint generator** | Builds the full 20-section plan from requirements, answers, dataset metadata, and references. |
+| **Critic agent** | Audits leakage, validation protocol, metrics, and diagram edges, then patches what it can. |
+| **Demo fallback** | Produces a complete deterministic blueprint when Gemini is missing or unavailable. Marked `demoFallback: true`. |
 
 ---
 
-## Knowledge base
+## What you get
 
-| Parameter | Value |
-|---|---|
-| Source documents | 6 curated ML documents (preprocessing, classification, regression, clustering, evaluation metrics, model selection) |
-| Chunking | 400 units per chunk, 50-unit overlap |
-| Chunks produced | 238 (no empty chunks) |
-| Embedding model | `all-MiniLM-L6-v2` (sentence-transformers) |
-| Embedding size | 384 dimensions |
-| Storage | Supabase PostgreSQL with pgvector, table `public.document_chunks` |
-| Search function | `public.match_document_chunks` |
+- **20 architecture sections:** problem definition, objectives, ML task, dataset strategy, data collection, preprocessing, EDA, feature engineering and selection, algorithms, model justification, training pipeline, evaluation, validation, architecture, technology stack, deployment, monitoring, and roadmap.
+- **Interactive architecture diagram:** five colored lanes, clickable nodes, edge labels, forward and feedback connections, and SVG export.
+- **Curated datasets:** 15 public datasets with source URLs, licenses, schemas, and live previews where available. Telecom churn, breast cancer, Cleveland heart disease, California housing, German credit, Spambase, Pima diabetes, Palmer penguins, MNIST, and more.
+- **Exports:** a formatted **PDF**, and a **ZIP** containing the PDF, dataset attribution, an architecture spec, the SVG diagram, the JSON blueprint, RAG and critic reports, a CSV template, a Python skeleton, and a Markdown README.
+- **Saved projects:** sign in with Google to keep your history, reopen projects, and delete them. Each user only sees their own projects.
 
 ---
 
 ## Quick start
 
-**Requirements:** Python 3.11+, Node.js 18+, a Supabase project, and a Gemini API key.
+**Requirements:** Node.js 18+ and npm.
 
 ```bash
 # 1. Clone
-git clone https://github.com/himaparvathia23ec/BuildMyML.git
-cd BuildMyML
+git clone https://github.com/himaparvathia23ec/BUILD-MY-ML.git
+cd BUILD-MY-ML
 
-# 2. Configure secrets (never commit this file)
-cp backend/.env.example backend/.env
-# then fill in GEMINI_API_KEY, SUPABASE_URL, SUPABASE_KEY
-
-# 3. Backend
-cd backend
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-
-# 4. Frontend (in a second terminal)
-cd frontend
+# 2. Install
 npm install
-npm run dev        # http://localhost:5173
+
+# 3. Configure (optional, but enables live Gemini output)
+cp .env.example .env
+# set GEMINI_API_KEY in .env
+
+# 4. Run in development (Express + Vite together)
+npm run dev
 ```
 
-API docs are available at **http://localhost:8000/docs** once the backend is running.
+Open **http://localhost:3000**.
+
+Without a Gemini key, the app still works: blueprints come from the deterministic demo fallback.
+
+### Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run dev` | Starts the Express server with Vite middleware |
+| `npm run build` | Builds the frontend into `dist/` |
+| `npm start` | Runs production mode (`tsx server.ts`), serving `dist/` and `/api/*` |
+| `npm run lint` | Type-checks with `tsc --noEmit` |
+| `npm run preview` | Previews the built frontend |
 
 ---
 
-## Environment variables
+## Configuration
 
-| Variable | Used for |
-|---|---|
-| `GEMINI_API_KEY` | Gemini recommendation calls |
-| `SUPABASE_URL` | Your Supabase project URL |
-| `SUPABASE_KEY` | Supabase access for storing and searching chunks |
-| `FRONTEND_ORIGIN` | Allowed origin for CORS (default `http://localhost:5173`) |
+| Variable | Required | Purpose |
+|---|---|---|
+| `GEMINI_API_KEY` | No | Enables live Gemini agents. Server-side only. |
+| `NODE_ENV` | No | Set to `production` on Render, so the server serves `dist/`. |
+| `PORT` | No | Supplied by Render. Defaults to `3000`. |
+| `APP_URL` | No | Documented in `.env.example`. Not used by core generation. |
+
+Firebase's public web configuration lives in `firebase-applet-config.json`. Those values are client configuration, not secrets.
 
 ---
 
@@ -117,35 +129,69 @@ API docs are available at **http://localhost:8000/docs** once the backend is run
 
 | Method | Route | Purpose |
 |---|---|---|
-| `POST` | `/blueprints` | Submit an idea and run the pipeline |
-| `GET` | `/blueprints/{id}` | Reload a saved run |
-| `GET` | `/blueprints/{id}/export?format=json\|md\|zip` | Download the blueprint |
+| `GET` | `/api/health` | Health check |
+| `GET` | `/api/datasets` | List datasets (`?q=` search, `?category=` filter) |
+| `GET` | `/api/datasets/:id/preview` | Sample rows, or a verified schema for large files |
+| `GET` | `/api/datasets/:id/download` | Dataset download |
+| `POST` | `/api/blueprint/analyze` | Requirement analysis and clarification questions |
+| `POST` | `/api/blueprint/generate?stream=true` | Streams stage events, then the final blueprint |
 
 ---
 
 ## Tech stack
 
-**Backend:** FastAPI, sentence-transformers (`all-MiniLM-L6-v2`), Google Gemini API
-**Storage:** Supabase PostgreSQL with pgvector
-**Frontend:** React, Vite, Tailwind CSS
+| Layer | Tools |
+|---|---|
+| Frontend | React 19, TypeScript, Vite, Tailwind CSS |
+| Backend | Express, `tsx`, the Gemini SDK |
+| Persistence | Firebase Authentication (Google) and Firestore |
+| Exports | jsPDF (PDF), JSZip (ZIP) |
+| Hosting | Render (Node web service) |
+
+---
+
+## Project structure
+
+```
+server.ts                       Express app, routes, SSE generation, demo fallback
+server/
+  agents/                       requirement, clarification, RAG, blueprint, critic, Gemini client
+  datasets.ts                   curated dataset catalogue and helpers
+  knowledge/mlKnowledgeBase.ts  local ML knowledge documents
+src/
+  App.tsx                       main controller
+  components/                   prompt workspace, dataset explorer, blueprint view, architecture diagram
+  utils/                        diagram renderer, PDF generator, ZIP exporter
+  services/projectRepository.ts Firestore persistence, owner-isolated
+  types/ml.ts                   shared data model (frontend and backend contract)
+firestore.rules                 owner-based security rules
+```
+
+---
+
+## Honest notes
+
+- **Demo output is deterministic.** When Gemini isn't available, the blueprint is built from domain keyword detection, dataset metadata, RAG ranking, and fixed architecture patterns. It's a structured demonstration, not a live AI response. The app labels it as demo output.
+- **No model training.** BuildMyML designs the project. It doesn't train candidate algorithms.
+- **Retrieval is lexical.** The RAG step ranks the local knowledge base by terms and tags. It doesn't use embeddings or an external vector database.
+- **No automated tests yet.** Validation so far is `npm run lint`, `npm run build`, and manual checks of the API routes.
 
 ---
 
 ## Roadmap
 
-- [ ] Verify the full pipeline on real inputs, with stage status shown from actual runs
-- [ ] Return datasets only with a verified source URL
-- [ ] Implement the Critic check
-- [ ] Export JSON, Markdown, and ZIP from saved runs
-- [ ] GitHub sign-in
-- [ ] Measure retrieval relevance and blueprint quality on a fixed set of project ideas
+- [ ] Replace lexical RAG with embedding-based retrieval
+- [ ] Add automated tests for the agents and API routes
+- [ ] Add the Vite native config-loader warning fix and split the large bundle
+- [ ] Rewrite this README against any future architecture changes
 
 ---
 
 ## Security
 
-- Secrets live in `backend/.env`, which is excluded from git.
-- If a key was ever committed, rotate it, even after removing it from the latest commit.
+- Keep `GEMINI_API_KEY` in `.env` on the server. Never put it in the browser code, the Firebase config, or Git.
+- Any key that has been committed or pasted anywhere should be revoked and replaced.
+- Firestore rules require verified users, owner checks, constrained field lengths, and server timestamps.
 
 ---
 
@@ -154,3 +200,9 @@ API docs are available at **http://localhost:8000/docs** once the backend is run
 Built at the Department of CSE (AI & ML), Sai Vidya Institute of Technology, Bengaluru.
 
 Dr Kumaresh Sheelavant · Aayush N · B Rishitha · Harshita R · Hima Parvathi A
+
+---
+
+## License
+
+To be added by the team.
