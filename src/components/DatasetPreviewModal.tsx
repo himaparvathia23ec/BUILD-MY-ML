@@ -27,7 +27,7 @@ export function DatasetPreviewModal({
       aria-modal="true"
       aria-labelledby="dataset-preview-title"
     >
-      <div className="bg-white border border-slate-200 rounded-xl max-w-5xl w-full max-h-[86vh] flex flex-col shadow-lg">
+      <div className="prototype-modal bg-white border border-slate-200 rounded-2xl max-w-5xl w-full max-h-[86vh] flex flex-col shadow-lg">
         <div className="px-6 py-4 border-b border-slate-200 flex items-start justify-between gap-4">
           <div>
             <h2 id="dataset-preview-title" className="font-display text-lg font-semibold text-slate-900">

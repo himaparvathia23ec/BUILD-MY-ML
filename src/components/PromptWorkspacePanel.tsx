@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AlertCircle,
   CheckCircle2,
@@ -60,6 +60,27 @@ export function PromptWorkspacePanel({
 }: PromptWorkspacePanelProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [customAnswers, setCustomAnswers] = useState<Record<string, string>>({});
+  const [placeholder, setPlaceholder] = useState('');
+
+  useEffect(() => {
+    if (prompt || stage !== 'idle') {
+      setPlaceholder('');
+      return;
+    }
+    const hint =
+      'Example: Build a customer churn prediction system for a subscription telecom service with 30-day advance warning, calibrated risk probabilities, SHAP explanations for retention teams, and weekly batch scoring...';
+    let index = 0;
+    let timeout: number | undefined;
+    const typeHint = () => {
+      index = Math.min(index + 1, hint.length);
+      setPlaceholder(hint.slice(0, index));
+      if (index < hint.length) timeout = window.setTimeout(typeHint, 24);
+    };
+    timeout = window.setTimeout(typeHint, 450);
+    return () => {
+      if (timeout) window.clearTimeout(timeout);
+    };
+  }, [prompt, stage]);
 
   const isGenerating =
     stage === 'analyzing' ||
@@ -84,7 +105,7 @@ export function PromptWorkspacePanel({
   };
 
   return (
-    <section className="bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-5 h-full">
+    <section className="prototype-panel prototype-center-panel workspace-glow bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-5 h-full">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-xl font-bold text-slate-900 balance-text">
@@ -154,7 +175,7 @@ export function PromptWorkspacePanel({
           disabled={isGenerating}
           rows={11}
           maxLength={8000}
-          placeholder="Example: Build a customer churn prediction system for a subscription telecom service with 30-day advance warning, calibrated risk probabilities, SHAP explanations for retention teams, and weekly batch scoring..."
+          placeholder={placeholder}
           className="w-full flex-1 min-h-[240px] rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 leading-relaxed focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 disabled:bg-slate-50 disabled:text-slate-500 resize-y"
         />
       </div>
@@ -249,12 +270,12 @@ export function PromptWorkspacePanel({
                 return (
                   <div
                     key={step.key}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md border text-xs ${
+                    className={`prototype-stage flex items-center gap-2 px-3 py-2 rounded-md border text-xs ${
                       isActive
-                        ? 'bg-white border-blue-300 text-slate-900 font-medium'
+                        ? 'prototype-stage-active bg-indigo-50 border-indigo-300 text-slate-900 font-medium'
                         : isDone
-                        ? 'bg-white border-emerald-200 text-emerald-700'
-                        : 'bg-slate-100/60 border-slate-200 text-slate-400'
+                        ? 'prototype-stage-complete bg-white border-emerald-200 text-emerald-700'
+                        : 'prototype-stage-waiting bg-slate-100/60 border-slate-200 text-slate-400'
                     }`}
                   >
                     {isDone ? (
@@ -297,7 +318,7 @@ export function PromptWorkspacePanel({
           type="button"
           onClick={onSubmitPrompt}
           disabled={isGenerating || prompt.trim().length < 4}
-          className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed whitespace-nowrap shrink-0"
+          className="prototype-generate inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed whitespace-nowrap shrink-0"
         >
           {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
           <span>{isGenerating ? 'Generating Architecture...' : 'Generate Blueprint'}</span>

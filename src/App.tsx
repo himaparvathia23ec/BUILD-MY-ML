@@ -26,6 +26,7 @@ import { DatasetPreviewModal } from './components/DatasetPreviewModal';
 import { RecentProjectsSection } from './components/RecentProjectsSection';
 import { BlueprintResultsView } from './components/BlueprintResultsView';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { AmbientMotion } from './components/AmbientMotion';
 import { generateArchitecturePdfBlob, triggerBlobDownload } from './utils/pdfGenerator';
 import { generateProjectZipBlob } from './utils/zipExporter';
 
@@ -478,7 +479,8 @@ function BuildMyMLApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="buildmyml-app min-h-screen bg-slate-50 flex flex-col">
+      <AmbientMotion />
       <TopBar
         activeView={activeView}
         hasBlueprint={Boolean(activeBlueprint)}
@@ -512,11 +514,11 @@ function BuildMyMLApp() {
           onBackToWorkspace={() => setActiveView('workspace')}
         />
       ) : (
-        <main className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6 space-y-6 flex-1">
+        <main className="prototype-workspace-main max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6 space-y-6 flex-1">
           {/* Three-Panel Main Workspace */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+          <div className="prototype-workspace-grid grid grid-cols-1 gap-5 items-stretch">
             {/* Left Panel: Prompt Examples */}
-            <div className="lg:col-span-3">
+            <div>
               <PromptExamplesPanel
                 selectedExampleId={selectedExampleId}
                 onSelectExample={handleSelectExample}
@@ -524,7 +526,7 @@ function BuildMyMLApp() {
             </div>
 
             {/* Center Panel: Prompt Workspace */}
-            <div className="lg:col-span-5">
+            <div>
               <PromptWorkspacePanel
                 prompt={prompt}
                 onPromptChange={(val) => {
@@ -550,7 +552,7 @@ function BuildMyMLApp() {
             </div>
 
             {/* Right Panel: Random Dataset Explorer */}
-            <div className="lg:col-span-4">
+            <div>
               <DatasetExplorerPanel
                 datasets={datasets}
                 loading={datasetsLoading}
