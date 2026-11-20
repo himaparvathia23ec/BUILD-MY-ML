@@ -2,7 +2,7 @@ import { GoogleGenAI } from '@google/genai';
 
 // Use generally available Gemini API model IDs. The previous internal preview
 // names return PERMISSION_DENIED from the public Generative Language API.
-export const GEMINI_MODEL = 'gemini-3.5-pro';
+export const GEMINI_MODEL = 'gemini-3.5-flash-lite';
 export const GEMINI_FAST_MODEL = 'gemini-3.5-flash-lite';
 
 let cachedClient: GoogleGenAI | null = null;
