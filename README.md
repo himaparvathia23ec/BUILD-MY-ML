@@ -222,11 +222,6 @@ firestore.rules                 owner-based security rules
 Built at the Department of CSE (AI & ML), Sai Vidya Institute of Technology, Bengaluru.
 
 Dr Kumaresh Sheelavant · Aayush N · B Rishitha · Harshita R · Hima Parvathi A
-
-Sai Vidya Institute of Technology 
-this college is an engineering institution located in Bengaluru, Karnataka, India.
-This project, BuildMyML, is developed as part of the academic curriculum by students of the Department of Computer Science and Engineering (Artificial Intelligence and Machine Learning).
-
 ---
 
 ## License
