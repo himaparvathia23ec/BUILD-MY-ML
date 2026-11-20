@@ -27,6 +27,7 @@ import { RecentProjectsSection } from './components/RecentProjectsSection';
 import { BlueprintResultsView } from './components/BlueprintResultsView';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AmbientMotion } from './components/AmbientMotion';
+import { WelcomeIntro } from './components/WelcomeIntro';
 import { generateArchitecturePdfBlob, triggerBlobDownload } from './utils/pdfGenerator';
 import { generateProjectZipBlob } from './utils/zipExporter';
 
@@ -599,9 +600,12 @@ function BuildMyMLApp() {
 }
 
 export default function App() {
+  const [showWelcomeIntro, setShowWelcomeIntro] = useState(true);
+
   return (
     <ErrorBoundary>
       <BuildMyMLApp />
+      {showWelcomeIntro && <WelcomeIntro onComplete={() => setShowWelcomeIntro(false)} />}
     </ErrorBoundary>
   );
 }
