@@ -90,6 +90,7 @@ export function PromptWorkspacePanel({
     stage === 'critic';
 
   const currentStepIndex = PIPELINE_STEPS.findIndex((s) => s.key === stage);
+  const isClarifying = stage === 'clarifying';
 
   const handleConfirmClarifications = () => {
     const answers: ClarificationAnswer[] = clarificationQuestions.map((q) => {
@@ -105,7 +106,7 @@ export function PromptWorkspacePanel({
   };
 
   return (
-    <section className="prototype-panel prototype-center-panel workspace-glow bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-5 h-full">
+    <section className={`prototype-panel prototype-center-panel workspace-glow bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-5 h-full ${isClarifying ? 'is-clarifying' : ''}`}>
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-xl font-bold text-slate-900 balance-text">
@@ -161,7 +162,7 @@ export function PromptWorkspacePanel({
       </div>
 
       {/* Multiline Prompt Editor */}
-      <div className="flex-1 flex flex-col">
+      <div className="prototype-prompt-editor flex-1 flex flex-col">
         <div className="flex items-center justify-between mb-2">
           <label htmlFor="ml-prompt-editor" className="text-xs font-semibold text-slate-700">
             Project Prompt &amp; Requirements
@@ -181,7 +182,7 @@ export function PromptWorkspacePanel({
       </div>
 
       {/* Interactive Clarification Panel (shown when Clarification Agent flags brief prompt) */}
-      {stage === 'clarifying' && clarificationQuestions.length > 0 && (
+      {isClarifying && clarificationQuestions.length > 0 && (
         <div className="border border-blue-200 bg-blue-50/40 rounded-lg p-4 space-y-4">
           <div className="flex items-start justify-between gap-3">
             <div>

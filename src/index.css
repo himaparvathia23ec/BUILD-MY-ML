@@ -261,6 +261,28 @@
   }
 }
 
+@media (min-width: 1024px) {
+  .prototype-center-panel.is-clarifying {
+    height: auto;
+    min-height: 0;
+    max-height: calc(100vh - 8rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .prototype-center-panel.is-clarifying .prototype-prompt-editor {
+    flex: 0 0 auto;
+  }
+
+  .prototype-center-panel.is-clarifying textarea {
+    height: clamp(160px, 22vh, 220px);
+    min-height: 160px;
+    max-height: 220px;
+    flex: none;
+  }
+}
+
 @keyframes prototype-rise {
   from { opacity: 0; transform: translateY(34px) scale(.97); }
   to { opacity: 1; transform: none; }
