@@ -1,0 +1,8 @@
+{
+  "name": "BuildMyML",
+  "description": "AI-powered Machine Learning Project Architecture Generator with curated public datasets, multi-agent blueprint synthesis, PDF reports, and ZIP project packaging.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

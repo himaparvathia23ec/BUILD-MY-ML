@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Authenticated BuildMyML engineer profile with strict owner-only PII isolation.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth UID matching the document ID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "description": "Verified account email address.",
+          "minLength": 3,
+          "maxLength": 254
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "Optional profile avatar URL.",
+          "maxLength": 1024
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of account profile creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest profile update."
+        }
+      },
+      "required": ["uid", "displayName", "email", "createdAt", "updatedAt"]
+    },
+    "MlProject": {
+      "title": "MlProject",
+      "description": "Generated Machine Learning architecture blueprint and associated dataset metadata.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Project document ID.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the user who owns this project.",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "description": "Generated project title.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Original user prompt.",
+          "minLength": 1,
+          "maxLength": 8000
+        },
+        "mlTaskType": {
+          "type": "string",
+          "description": "Identified ML task category.",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "datasetId": {
+          "type": "string",
+          "description": "Optional selected curated dataset identifier.",
+          "maxLength": 128
+        },
+        "datasetName": {
+          "type": "string",
+          "description": "Optional selected dataset display name.",
+          "maxLength": 200
+        },
+        "datasetSourceUrl": {
+          "type": "string",
+          "description": "Verified repository URL for the selected dataset.",
+          "maxLength": 1024
+        },
+        "clarifications": {
+          "type": "array",
+          "description": "Bounded list of clarification Q&A pairs applied during blueprint generation."
+        },
+        "blueprint": {
+          "type": "object",
+          "description": "Structured 20-section ML architecture blueprint, system diagram, RAG references, and critic validation report."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["generated", "archived"],
+          "description": "Lifecycle status of the generated project."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of project creation."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of latest update."
+        }
+      },
+      "required": ["id", "ownerId", "title", "prompt", "mlTaskType", "blueprint", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-isolated user profile documents."
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/MlProject" },
+      "description": "Persistent ML architecture projects owned by authenticated users."
+    }
+  }
+}
