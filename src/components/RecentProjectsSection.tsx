@@ -26,7 +26,7 @@ export function RecentProjectsSection({
   onDeleteProject,
 }: RecentProjectsSectionProps) {
   return (
-    <section id="recent-projects" className="bg-white border border-slate-200 rounded-xl p-6">
+    <section id="recent-projects" className="prototype-recent bg-white border border-slate-200 rounded-2xl p-6">
       <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
         <div>
           <h2 className="font-display text-lg font-semibold text-slate-900">Recent Projects</h2>

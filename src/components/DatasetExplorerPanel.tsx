@@ -38,7 +38,7 @@ export function DatasetExplorerPanel({
   onPreviewDataset,
 }: DatasetExplorerPanelProps) {
   return (
-    <aside className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-4 h-full">
+    <aside className="prototype-panel prototype-right-panel bg-white border border-slate-200 rounded-2xl p-5 flex flex-col gap-4 h-full">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="font-display text-base font-semibold text-slate-900">Random Dataset Explorer</h2>
@@ -123,7 +123,7 @@ export function DatasetExplorerPanel({
             return (
               <article
                 key={ds.id}
-                className={`border rounded-lg p-3.5 transition-colors ${
+                className={`prototype-dataset-card border rounded-xl p-3.5 transition-colors ${
                   isSelected ? 'border-blue-600 bg-blue-50/30' : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >

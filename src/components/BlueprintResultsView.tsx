@@ -61,7 +61,7 @@ export function BlueprintResultsView({
   onBackToWorkspace,
 }: BlueprintResultsViewProps) {
   return (
-    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 py-8">
+    <div className="prototype-results max-w-[1440px] mx-auto px-4 sm:px-6 py-8">
       {/* Top Document Header & Export Actions */}
       <div className="bg-white border border-slate-200 rounded-xl p-6 mb-6">
         <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">

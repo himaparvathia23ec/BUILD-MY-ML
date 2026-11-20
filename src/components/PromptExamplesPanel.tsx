@@ -19,7 +19,7 @@ export function PromptExamplesPanel({ selectedExampleId, onSelectExample }: Prom
   const visibleDetailed = showAllDetailed ? detailedExamples : detailedExamples.slice(0, 3);
 
   return (
-    <aside className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col gap-6 h-full">
+    <aside className="prototype-panel prototype-left-panel bg-white border border-slate-200 rounded-2xl p-5 flex flex-col gap-6 h-full">
       <div>
         <h2 className="font-display text-base font-semibold text-slate-900">Prompt Examples</h2>
         <p className="mt-1 text-xs text-slate-500 leading-relaxed">

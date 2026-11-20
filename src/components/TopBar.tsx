@@ -25,19 +25,19 @@ export function TopBar({
   onSignOut,
 }: TopBarProps) {
   return (
-    <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-xs border-b border-slate-200">
+    <header className="prototype-header sticky top-0 z-30 bg-white/95 border-b border-slate-200">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 h-15 flex items-center justify-between gap-8">
         {/* Zone 1: Single text element wordmark */}
         <button
           type="button"
           onClick={onNavigateWorkspace}
-          className="font-display text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-600 rounded-sm"
+          className="prototype-logo font-display text-lg font-bold tracking-tight text-slate-900 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-600 rounded-sm"
         >
           BuildMyML
         </button>
 
         {/* Zone 2: Clean single-line text navigation links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <nav className="prototype-tabs hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
           <button
             type="button"
             onClick={onNavigateWorkspace}
@@ -93,7 +93,7 @@ export function TopBar({
             <button
               type="button"
               onClick={onSignIn}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              className="prototype-signin inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-slate-900 hover:bg-slate-800 rounded-lg transition-colors whitespace-nowrap shrink-0 cursor-pointer"
             >
               <LogIn className="w-3.5 h-3.5" />
               <span>Sign In</span>
