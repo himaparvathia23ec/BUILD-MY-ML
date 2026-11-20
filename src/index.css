@@ -226,11 +226,29 @@
     height: auto;
     min-height: 690px;
     overflow: visible;
+    align-self: start;
   }
 }
 
 .prototype-workspace-main {
   max-width: 1200px;
+  padding-bottom: 64px;
+}
+
+.prototype-recent {
+  margin-top: 48px;
+}
+
+@media (min-width: 1024px) {
+  .prototype-recent {
+    margin-top: clamp(220px, 31vh, 340px);
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 700px) {
+  .prototype-recent {
+    margin-top: clamp(220px, 30vh, 340px);
+  }
 }
 
 .prototype-left-panel { animation-delay: .12s; }
