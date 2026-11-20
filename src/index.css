@@ -222,6 +222,11 @@
   .prototype-panel {
     height: 690px;
   }
+  .prototype-center-panel {
+    height: auto;
+    min-height: 690px;
+    overflow: visible;
+  }
 }
 
 .prototype-workspace-main {
