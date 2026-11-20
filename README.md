@@ -14,6 +14,24 @@
 </p>
 
 ---
+## Institution Details
+
+This project is developed as part of the Major Project for the academic year 2026–2027.
+
+Institution: Sai Vidya Institute of Technology
+Affiliated University: Visvesvaraya Technological University (VTU)
+Department: Computer Science and Engineering (Artificial Intelligence and Machine Learning)
+Location: Bengaluru, Karnataka, India
+
+Project Team
+Team Number: 25
+Project Title: Build-My-ML an Intelligent and Explainable projecy Design System
+
+Academic Details
+Programme: Bachelor of Technology / Bachelor of Engineering (B.E.)
+Academic Year: 2026–2027
+
+---
 
 ## Why it exists
 
